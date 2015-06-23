@@ -46,33 +46,33 @@ different than the syntax of binary instructions, but it's still not final);
 3. this means that the result of top of stack is put back into the top of stack.
 
 
-### Operators
+### Operands
 
-Operators are parameters to instructions. Available reserved operators can be
+Operands are parameters to instructions. Available reserved operands can be
 found at `spec/identifiers.py`.
 
-Operators are typically formed as
+Operands are typically formed as
 
     [INDICATOR]IDENTIFIER[(PARAMETER)]
 
-Parts in brackets are omittable. Indicators indicate the type of operators. Keti
+Parts in brackets are omittable. Indicators indicate the type of operands. Keti
 VL currently supports four: macro (`#`), val (`@`), label (`:`) and blank.
-Identifier is the ID for the operator. And parameter is used to make things more
+Identifier is the ID for the operand. And parameter is used to make things more
 flexible.
 
-A macro operator means that you can perform extra actions when referencing them.
-And val operator enables you referencing the value within the identifier.
+A macro operand means that you can perform extra actions when referencing them.
+And val operand enables you referencing the value within the identifier.
 For example, by executing `push #read`, you can read from standard input, save
 the input in register `read` and push the content in register `read` into the
-stack, while `push @read` only does the push. Quick tip: macro operators without
+stack, while `push @read` only does the push. Quick tip: macro operands without
 the macro indicators are valid instructions, e.g. `pop` pops the stack and save
 the popped element into register `pop`.
 
 Using terms like `@top` and `@bottom(1)`, you can access the top element of the
 stack and the element next to the bottom of the stack. The language can be very
-flexible if you put val operators and parameters into use. Parameters are simply
-operators. This suggests terms such as `@top(@top)` and `@top(@r1)` are valid
-operators.
+flexible if you put val operands and parameters into use. Parameters are simply
+operands. This suggests terms such as `@top(@top)` and `@top(@r1)` are valid
+operands.
 
 ### Special instructions
 
