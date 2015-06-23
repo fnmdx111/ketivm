@@ -74,7 +74,7 @@ flexible if you put val operators and parameters into use. Parameters are simply
 operators. This suggests terms such as `@top(@top)` and `@top(@r1)` are valid
 operators.
 
-### Special Instructions
+### Special instructions
 
 There presents virtual instruction in Keti VL, i.e. the label instruction, which
 labels segments of codes and is not present in parsed code.
