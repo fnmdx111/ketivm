@@ -42,6 +42,7 @@ INST_RET = 'ret'
 INST_JUMP = 'jump'
 INST_PRINTLN = 'println'
 INST_PRINTLN_TOP = 'println-top'
+INST_READ = 'read'
 
 INST_INT = 'int'
 

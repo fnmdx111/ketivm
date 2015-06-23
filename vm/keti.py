@@ -64,6 +64,10 @@ class KetiVM:
         self.push(lambda vm: int(op(self)))
 
     @regular_inst
+    def read(self):
+        self._reg_read = input()
+
+    @regular_inst
     def inc_top(self):
         self._stk_data[-1] += 1
 
