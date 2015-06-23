@@ -1,0 +1,31 @@
+push-int #read
+move @top, read  ;; convert the content of reg-read to an integer
+move 0, r1
+
+label :LOOP
+inc r1
+pow @r1, 2, r2
+test @r2, @read
+jplt :LOOP
+jple :LB-EQ
+jpgt :LB-ENOUGH
+
+label :LB-ENOUGH
+call :NEWTON
+label LB-EQ
+print @r1
+exit
+
+label :NEWTON
+int
+sub @r2, @read, r3
+move @r1, r4
+mul @r4, 2, r4
+div @r3, @r4, r3
+sub @r1, @r3, r1
+
+pow @r1, 2, r2
+sub @r2, @read, r3
+test @r3, 0.00000001
+jpge :NEWTON
+ret

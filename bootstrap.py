@@ -12,4 +12,4 @@ def execute(path):
         keti.inst_streaming()
 
 if __name__ == '__main__':
-    execute('sample.ket')
+    execute('sample-reg.ket')

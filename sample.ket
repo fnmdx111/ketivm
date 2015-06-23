@@ -1,8 +1,9 @@
-0 push-int #rrd
+
+0 push-int #read
 1 push-int 0
 
 label :LOOP
-2 inc-top
+2 inc top
 3 push @top
 4 mul @top, #pop
 5 test @top, @top(2)
@@ -27,7 +28,7 @@ label :NEWTON
 
 20 mul @top, @top
 21 sub @top, @bottom
-22 test @top, 0.00000001
+22 test @top, 0.000000001
 23 pop
 24 jpge :NEWTON
 25 pop

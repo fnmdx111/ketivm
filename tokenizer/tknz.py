@@ -49,6 +49,8 @@ class MyFSM(FiniteStateMachine):
         elif self.state == self.INSTRUCTION:
             if ch == '-':
                 self._buffer.append(ch)
+            elif ch == ';':
+                self._tr(self.COMMENT)
             elif ch.isalpha():
                 self._buffer.append(ch)
             elif ch == '\n':
@@ -64,6 +66,8 @@ class MyFSM(FiniteStateMachine):
             if ch == ',':
                 if self._buffer:
                     return self.IDENTIFIER, self.yield_buffer()
+            elif ch == ';':
+                self._tr(self.COMMENT)
             elif ch == '\n':
                 self._tr(self.NEW_LINE)
                 if self._buffer:
