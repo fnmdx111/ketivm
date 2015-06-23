@@ -21,8 +21,10 @@ def _macro_rrd(vm):
     return vm._reg_read
 
 
-def _macro_invalid_macro(_):
-    raise InvalidMacro()
+def _macro_invalid_macro(name):
+    def _macro(vm):
+        raise InvalidMacro(name, vm)
+    return _macro
 
 
 MACRO_TABLE = {
@@ -84,7 +86,7 @@ class Operand:
         elif indicator == IND_MACRO_CALL:
             self._type = T_MACRO_CALL
             self._macro = MACRO_TABLE.get(content,
-                                          _macro_invalid_macro)
+                                          _macro_invalid_macro(content))
             # TODO add debug information, like macro name, ip-then etc.
 
         if content == OP_TOP:
