@@ -10,7 +10,7 @@ It's a simple toy. An assembly-like language is created for this VM. See
 Keti VL (virtual language) specification
 ----
 
-#### Instructions
+### Instructions
 
 It's an assembly-like language. Basic instructions are listed in
 `spec/instructions.py`.
@@ -46,7 +46,7 @@ different than the syntax of binary instructions, but it's still not final);
 3. this means that the result of top of stack is put back into the top of stack.
 
 
-#### Operators
+### Operators
 
 Operators are parameters to instructions. Available reserved operators can be
 found at `spec/identifiers.py`.
@@ -74,7 +74,7 @@ flexible if you put val operators and parameters into use. Parameters are simply
 operators. This suggests terms such as `@top(@top)` and `@top(@r1)` are valid
 operators.
 
-#### Special Instructions
+### Special Instructions
 
 There presents virtual instruction in Keti VL, i.e. the label instruction, which
 labels segments of codes and is not present in parsed code.
@@ -84,7 +84,7 @@ executing this instruction, the Keti VM loads a debugging console into the
 frontend, enabling viewing of the state of VM. For available commands, see
 `vm/keti.py:int`.
 
-#### Implementation details
+### Implementation details
 
 Please refer to the codes.
 
