@@ -1,0 +1,3 @@
+
+class InvalidMacro(Exception):
+    pass
