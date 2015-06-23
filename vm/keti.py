@@ -1,7 +1,10 @@
 from functools import wraps
 import sys
-from .operand import Operand, IND_MACRO_CALL, OP_POP
+from .operand import OP_POP
+from spec.identifiers import IND_MACRO
 from spec.instructions import *
+from tokenizer.parser import make_operand
+
 
 def inst_to_attr(inst):
     return inst.replace('-', '_').lower()
@@ -12,6 +15,14 @@ def regular_inst(f):
         f(self, *args, **kwargs)
         self._inst_ptr += 1
 
+    return wrapper
+
+def _sv(x):
+    # generate a single-valued function
+    # I really have no idea how to build this vm with C, despite the fact
+    # that C can perform FP to some extent
+    def wrapper(_):
+        return x
     return wrapper
 
 
@@ -25,6 +36,7 @@ class KetiVM:
         self._abs_label_dict = {}
 
         self._reg_read = ''
+        self._reg_pop = None
 
         self._r0 = None
 
@@ -42,11 +54,8 @@ class KetiVM:
     def __init__(self):
         self.init_state()
 
-        self.O = lambda ref: Operand(ref, vm=self)
-
     def _gen_op_mpop(self):
-        return self.O(''.join([IND_MACRO_CALL,
-                               OP_POP]))
+        return make_operand(''.join([IND_MACRO, OP_POP]))
 
     def mul0(self):
         o2 = self._gen_op_mpop()
@@ -76,7 +85,7 @@ class KetiVM:
     def sub0(self):
         o2 = self._gen_op_mpop()(self)
         o1 = self._gen_op_mpop()(self)
-        self.sub2(self.O(o1), self.O(o2))
+        self.sub2(_sv(o1), _sv(o2))
 
     def sub(self, *args):
         if len(args) == 2:
@@ -110,7 +119,7 @@ class KetiVM:
     def div0(self):
         o1 = self._gen_op_mpop()(self)
         o2 = self._gen_op_mpop()(self)
-        self.div2(self.O(o2), self.O(o1))
+        self.div2(_sv(o2), _sv(o1))
 
     def div(self, *args):
         if len(args) == 2:
@@ -138,14 +147,14 @@ class KetiVM:
         print(op(self), end='')
 
     def print_top(self):
-        self.print(self.O('@top'))
+        self.print(make_operand('@top'))
 
     @regular_inst
     def println(self, op):
         print(op(self))
 
     def println_top(self):
-        self.println(self.O('@top'))
+        self.println(make_operand('@top'))
 
     def label(self, name, ptr=0):
         self._abs_label_dict[name] = ptr or self._inst_ptr

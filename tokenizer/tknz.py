@@ -1,5 +1,5 @@
-import string
-from .fsm import FiniteStateMachine, InvalidState
+from .fsm import FiniteStateMachine
+from .exceptions import InvalidState
 
 
 class MyFSM(FiniteStateMachine):
@@ -10,10 +10,13 @@ class MyFSM(FiniteStateMachine):
     INSTRUCTION = 'inst'
     IDENTIFIER = 'id'
 
+    def __init__(self):
+        super(MyFSM, self).__init__(self.NEW_LINE, '\n')
+
     def transit(self, ch):
         if self.state == self.COMMENT:
             if ch == '\n':
-                self.state = self.NEW_LINE
+                self._tr(self.NEW_LINE)
             else:
                 pass
 
@@ -22,38 +25,38 @@ class MyFSM(FiniteStateMachine):
             if ch == '\n':
                 pass
             elif ch == ';':
-                self.state = self.COMMENT
-            elif ch in string.digits:
+                self._tr(self.COMMENT)
+            elif ch.isdigit():
                 self._buffer.append(ch)
-                self.state = self.LINE_NUMBER
-            elif ch in string.ascii_letters:
+                self._tr(self.LINE_NUMBER)
+            elif ch.isalpha():
                 self._buffer.append(ch)
-                self.state = self.INSTRUCTION
+                self._tr(self.INSTRUCTION)
 
         elif self.state == self.LINE_NUMBER:
             assert self._buffer
-            if ch in string.digits:
+            if ch.isdigit():
                 self._buffer.append(ch)
             elif ch == '\n':
-                self.state = self.NEW_LINE
+                self._tr(self.NEW_LINE)
                 if self._buffer:
                     return self.LINE_NUMBER, int(self.yield_buffer())
-            elif ch in string.whitespace:
-                self.state = self.INSTRUCTION
+            elif ch.isspace():
+                self._tr(self.INSTRUCTION)
                 if self._buffer:
                     return self.LINE_NUMBER, int(self.yield_buffer())
 
         elif self.state == self.INSTRUCTION:
             if ch == '-':
                 self._buffer.append(ch)
-            elif ch in string.ascii_letters:
+            elif ch.isalpha():
                 self._buffer.append(ch)
             elif ch == '\n':
-                self.state = self.NEW_LINE
+                self._tr(self.NEW_LINE)
                 if self._buffer:
                     return self.INSTRUCTION, self.yield_buffer()
-            elif ch in string.whitespace:
-                self.state = self.IDENTIFIER
+            elif ch.isspace():
+                self._tr(self.IDENTIFIER)
                 if self._buffer:
                     return self.INSTRUCTION, self.yield_buffer()
 
@@ -62,14 +65,14 @@ class MyFSM(FiniteStateMachine):
                 if self._buffer:
                     return self.IDENTIFIER, self.yield_buffer()
             elif ch == '\n':
-                self.state = self.NEW_LINE
+                self._tr(self.NEW_LINE)
                 if self._buffer:
                     return self.IDENTIFIER, self.yield_buffer()
-            elif ch in string.whitespace:
+            elif ch.isspace():
                 if self._buffer:
                     return self.IDENTIFIER, self.yield_buffer()
             else:
                 self._buffer.append(ch)
 
         else:
-            raise InvalidState()
+            raise InvalidState(self)

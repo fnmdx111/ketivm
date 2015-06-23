@@ -1,23 +1,24 @@
 0 push-int #rrd
 1 push-int 0
 
-label LOOP
+label :LOOP
 2 inc-top
 3 push @top
 4 mul @top, #pop
 5 test @top, @top(2)
 6 pop
-7 jplt LOOP
-8 jple LB-EQ
-9 jpgt LB-ENOUGH
-label LB-ENOUGH
+7 jplt :LOOP
+8 jple :LB-EQ
+9 jpgt :LB-ENOUGH
+label :LB-ENOUGH
 10 dec-top
 11 mul @top, @top
-label LB-EQ
-13 call NEWTON
+13 call :NEWTON
+label :LB-EQ
+26 print-top
 14 exit
 
-label NEWTON
+label :NEWTON
 15 push @bottom
 16 sub
 17 mul @bottom(1), 2
@@ -28,7 +29,6 @@ label NEWTON
 21 sub @top, @bottom
 22 test @top, 0.00000001
 23 pop
-24 jpge NEWTON
+24 jpge :NEWTON
 25 pop
-26 print-top
 27 ret

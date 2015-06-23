@@ -1,5 +1,6 @@
-from .ast import make_ast_from
+
 from spec.instructions import VIR_INST_LABEL
+from .parser import parse
 from vm.operand import Operand
 
 
@@ -9,12 +10,11 @@ def preprocess(fp):
 
     instructions = []
 
-    for stmt in make_ast_from(fp):
+    for stmt in parse(fp):
         if stmt[0] == VIR_INST_LABEL:
-            labels[stmt[1][0]] = program_counter
+            labels[stmt[1][0](None)] = program_counter
         else:
-            instructions.append([stmt[0],
-                                 list(map(Operand, stmt[1]))])
+            instructions.append(stmt)
             program_counter += 1
 
     return instructions, labels
