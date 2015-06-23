@@ -22,12 +22,12 @@ Almost all binary instructions can have up to three parameters:
     inst op1           (3)
     inst               (4)
 
-1. this means that the result of op1 and op2 is put into op3;
+1. this means that the result of `op1` and `op2` is put into `op3`;
 
-2. this means that the result of op1 and op2 is pushed into stack;
+2. this means that the result of `op1` and `op2` is pushed into stack;
 
-3. this means that the result of op1 and the top of stack (popped) is pushed
-back to stack, i.e. push op1 \n inst or pop \n inst @pop, op1;
+3. this means that the result of `op1` and the top of stack (popped) is pushed
+back to stack, i.e. `push op1 \n inst` or `pop \n inst @pop, op1`;
 
 4. this means that the result of the two elements at the top of stack (both
 popped) is pushed back into stack.
@@ -38,9 +38,9 @@ Almost all unary instructions can have up to two parameters:
     inst op1      (2)
     inst          (3)
 
-1. this means that the result of op1 is put into op2;
+1. this means that the result of `op1` is put into `op2`;
 
-2. this means that the result of op1 is put back into op1 (it's slightly
+2. this means that the result of `op1` is put back into `op1` (it's slightly
 different than the syntax of binary instructions, but it's still not final);
 
 3. this means that the result of top of stack is put back into the top of stack.
