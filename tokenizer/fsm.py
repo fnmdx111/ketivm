@@ -23,7 +23,7 @@ class FiniteStateMachine:
     def transit(self, ch):
         pass
 
-    def tokens_of(self, iterable):
+    def parse(self, iterable):
         for char in iterable:
             if char == '\n':
                 self._dbg_line_number += 1

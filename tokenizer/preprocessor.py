@@ -1,7 +1,6 @@
 
 from spec.instructions import VIR_INST_LABEL
-from .parser import parse
-from vm.operand import Operand
+from .op_parser import parse
 
 
 def preprocess(fp):

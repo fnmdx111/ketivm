@@ -5,6 +5,7 @@ OP_TOP = 'top'
 OP_BOTTOM = 'bottom'
 OP_POP = 'pop'
 OP_READ = 'read'
+OP_READ_INT = 'read-int'
 OP_TEST = 'test'
 
 
@@ -16,6 +17,10 @@ def _macro_pop(vm):
     vm._reg_pop = vm._stk_data.pop()
     return vm._reg_pop
 
+def _macro_read_int(vm):
+    vm._reg_read = int(input())
+    return vm._reg_read
+
 
 def _macro_invalid_macro(name):
     def _macro(vm):
@@ -26,6 +31,7 @@ def _macro_invalid_macro(name):
 MACRO_TABLE = {
     OP_POP: _macro_pop,
     OP_READ: _macro_rrd,
+    OP_READ_INT: _macro_read_int,
 }
 
 class Operand:

@@ -4,7 +4,7 @@ import sys
 from .operand import OP_POP, Operand
 from spec.identifiers import IND_MACRO, T_REF
 from spec.instructions import *
-from tokenizer.parser import make_operand
+from tokenizer.op_parser import make_operand
 from vm.exceptions import AccessViolation
 
 
@@ -66,6 +66,14 @@ class KetiVM:
     @regular_inst
     def read(self):
         self._reg_read = input()
+
+    @regular_inst
+    def read_int(self):
+        self._reg_read = int(input())
+
+    @regular_inst
+    def read_float(self):
+        self._reg_read = float(input())
 
     @regular_inst
     def inc_top(self):
