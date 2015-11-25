@@ -17,7 +17,6 @@ print @r1
 exit
 
 label :NEWTON
-int
 sub @r2, @read, r3
 move @r1, r4
 mul @r4, 2, r4
